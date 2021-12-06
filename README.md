@@ -1,3 +1,12 @@
+# Solution
+1. To run the solution, first make sure all requirements are installed using `pip install -r requirements.txt`;
+1. Install Docker desktop application and get the static postgre Northwind database running with docker `docker-compose up`;
+1. Execute the data pipeline: `python pipeline.py`.
+
+The code in `pipeline.py` will first download to the local filesystem the entire `northwind.sql` database, saving each table in a specific folder named with the date of the download. Each table file is saved as a CSV record and named with the SQL table name. Additionaly, the CSV sourced data (`order_details`) is loaded and saved to the local filesystem as well. This is done using the code from `step_one.py` module. Afterwards, the entire local filesystem (SQL and CSV sources) are transferred to a remote database (setup in the Heroku framework). This is done using the code from `step_two.py` module. Finally, the pipeline queries the Heroku database for the `orders` and `order_details` tables, saving them as CSV records in the project root folder with the prefix `final_query_`.
+
+The local filesystem path is setup in the `step_one` module using the `LOCAL_FILESYSTEM_PATH` variable. Also, the databases credentials, used for the connections, are stored in dictionaries `DB_CREDENTIALS` in each step module. Each module may be runned separately without any interference between each other.
+
 # code-challenge
 Indicium code challenge for Software Developer focusing on data projects
 
